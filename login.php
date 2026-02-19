@@ -1,38 +1,36 @@
 <?php
 session_start();
-include 'db.php';
+include 'db.php'; // Make sure this sets up $conn properly
 
+// Initialize error message
 $message = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $email = $_POST['email'];
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
+    // Prepare and execute query
     $sql = "SELECT * FROM User WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
-
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
-
         $row = $result->fetch_assoc();
 
         if (password_verify($password, $row['password'])) {
-
+            // Successful login → store session
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['role'] = $row['role'];
 
             header("Location: dashboard.php");
             exit();
-
         } else {
             $message = "Incorrect password.";
         }
-
     } else {
         $message = "No account found with that email.";
     }
@@ -46,8 +44,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Login | Buff Budgets</title>
+    <style>
+        .error {
+            color: red;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
-
 <body class="register-page">
 
 <nav class="register-navbar">
@@ -61,22 +66,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </ul>
 </nav>
 
-<?php if($message) echo "<p>$message</p>"; ?>
-
 <div class="register-container">
     <div class="register-card">
-
         <img src="logo.png" alt="Buff Budgets Logo" class="register-logo">
-
         <h2>Login</h2>
         <p class="register-subtitle">Access your budget dashboard</p>
 
-        <form class="register-form" method="POST" action="">
+        <!-- Display error message -->
+        <?php if($message): ?>
+            <p class="error"><?php echo htmlspecialchars($message); ?></p>
+        <?php endif; ?>
 
+        <form class="register-form" method="POST" action="">
             <input 
                 type="email" 
                 name="email" 
                 placeholder="Email Address"
+                value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
                 required
             >
 
@@ -90,9 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit" class="register-btn">
                 Login
             </button>
-
         </form>
-
     </div>
 </div>
 
