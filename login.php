@@ -1,16 +1,16 @@
 <?php
 session_start();
-include 'db.php'; // Make sure this sets up $conn properly
+include 'db.php';
 
-// Initialize error message
+
 $message = "";
 
-// Handle form submission
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // Prepare and execute query
+
     $sql = "SELECT * FROM User WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $row = $result->fetch_assoc();
 
         if (password_verify($password, $row['password'])) {
-            // Successful login → store session
+
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['role'] = $row['role'];
@@ -68,11 +68,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <div class="register-container">
     <div class="register-card">
-        <img src="logo.png" alt="Buff Budgets Logo" class="register-logo">
+        <img src="logo 2.png" alt="Buff Budgets Logo" class="register-logo">
         <h2>Login</h2>
         <p class="register-subtitle">Access your budget dashboard</p>
 
-        <!-- Display error message -->
+
         <?php if($message): ?>
             <p class="error"><?php echo htmlspecialchars($message); ?></p>
         <?php endif; ?>

@@ -45,12 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </ul>
     </nav>
 
-    <h1>Register</h1>
+
     <?php if($message) echo "<p>$message</p>"; ?>
 
     <div class="register-container">
         <div class="register-card">
-            <img src="logo.png" alt="Buff Budgets Logo" class="register-logo">
+            <img src="logo 2.png" alt="Buff Budgets Logo" class="register-logo">
             <h2>Register For An Account</h2>
             <p class="register-subtitle">Manage your budgets with confidence</p>
 

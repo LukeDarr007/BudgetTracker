@@ -652,3 +652,1094 @@ body.dashboard-page .footer-logo {
     width: 120px;
     margin-bottom: 1rem;
 }
+
+/* Account PAGE CSS */
+
+body.account-page {
+    background-color: var(--light-bg);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.account-page .account-navbar {
+    width: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.account-page .account-logo img {
+    width: 90px;
+    transition: var(--transition);
+}
+
+body.account-page .account-logo img:hover {
+    transform: scale(1.05);
+}
+
+body.account-page .account-nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+body.account-page .account-nav-links a {
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+body.account-page .account-nav-links a:hover {
+    color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    body.account-page .account-navbar {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    body.account-page .account-nav-links {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+body.account-page .account-hero-banner {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 90%;
+    margin: 30px auto;
+    background-color: var(--light-bg);
+}
+
+body.account-page .account-hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    padding: 2rem;
+}
+
+body.account-page .account-hero-text {
+    flex: 1;
+}
+
+body.account-page .account-hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+body.account-page .account-subtitle {
+    font-size: 1.3rem;
+     text-align: center;
+}
+
+body.account-page .stock-img {
+    width: 320px;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    body.account-page .account-hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    body.account-page .stock-img {
+        width: 80%;
+    }
+}
+
+body.account-page .account-footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 0.95rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+body.account-page .account-footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+body.account-page .account-footer-column {
+    flex: 1 1 250px;
+}
+
+body.account-page .account-footer-column h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #F28B30;
+}
+
+body.account-page .account-footer-column ul {
+    list-style: none;
+}
+
+body.account-page .account-footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+body.account-page .account-footer-column ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+body.account-page .account-footer-column ul li a:hover {
+    color: var(--accent-color);
+}
+
+body.account-page .footer-logo {
+    width: 120px;
+    margin-bottom: 1rem;
+}
+
+/* Expenses PAGE CSS */
+
+body.expenses-page {
+    background-color: var(--light-bg);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.expenses-page .expenses-navbar {
+    width: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.expenses-page .expenses-logo img {
+    width: 90px;
+    transition: var(--transition);
+}
+
+body.expenses-page .expenses-logo img:hover {
+    transform: scale(1.05);
+}
+
+body.expenses-page .expenses-nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+body.expenses-page .expenses-nav-links a {
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+body.expenses-page .expenses-nav-links a:hover {
+    color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    body.expenses-page .expenses-navbar {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    body.expenses-page .expenses-nav-links {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+body.expenses-page .expenses-hero-banner {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 90%;
+    margin: 30px auto;
+    background-color: var(--light-bg);
+}
+
+body.expenses-page .expenses-hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    padding: 2rem;
+}
+
+body.expenses-page .expenses-hero-text {
+    flex: 1;
+}
+
+body.expenses-page .expenses-hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+body.expenses-page .expenses-subtitle {
+    font-size: 1.3rem;
+     text-align: center;
+}
+
+body.expenses-page .stock-img {
+    width: 320px;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    body.expenses-page .expenses-hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    body.expenses-page .stock-img {
+        width: 80%;
+    }
+}
+
+body.expenses-page .expenses-footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 0.95rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+body.expenses-page .expenses-footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+body.expenses-page .expenses-footer-column {
+    flex: 1 1 250px;
+}
+
+body.expenses-page .expenses-footer-column h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #F28B30;
+}
+
+body.expenses-page .expenses-footer-column ul {
+    list-style: none;
+}
+
+body.expenses-page .expenses-footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+body.expenses-page .expenses-footer-column ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+body.expenses-page .expenses-footer-column ul li a:hover {
+    color: var(--accent-color);
+}
+
+body.expenses-page .footer-logo {
+    width: 120px;
+    margin-bottom: 1rem;
+}
+
+/* Budgets Page CSS */
+
+body.budgets-page {
+    background-color: var(--light-bg);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.budgets-page .budgets-navbar {
+    width: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.budgets-page .budgets-logo img {
+    width: 90px;
+    transition: var(--transition);
+}
+
+body.budgets-page .budgets-logo img:hover {
+    transform: scale(1.05);
+}
+
+body.budgets-page .budgets-nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+body.budgets-page .budgets-nav-links a {
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+body.budgets-page .budgets-nav-links a:hover {
+    color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    body.budgets-page .budgets-navbar {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    body.budgets-page .budgets-nav-links {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+body.budgets-page .budgets-hero-banner {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 90%;
+    margin: 30px auto;
+    background-color: var(--light-bg);
+}
+
+body.budgets-page .budgets-hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    padding: 2rem;
+}
+
+body.budgets-page .budgets-hero-text {
+    flex: 1;
+}
+
+body.budgets-page .budgets-hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+body.budgets-page .budgets-subtitle {
+    font-size: 1.3rem;
+     text-align: center;
+}
+
+body.budgets-page .stock-img {
+    width: 320px;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    body.budgets-page .budgets-hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    body.budgets-page .stock-img {
+        width: 80%;
+    }
+}
+
+body.budgets-page .budgets-footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 0.95rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+body.budgets-page .budgets-footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+body.budgets-page .budgets-footer-column {
+    flex: 1 1 250px;
+}
+
+body.budgets-page .budgets-footer-column h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #F28B30;
+}
+
+body.budgets-page .budgets-footer-column ul {
+    list-style: none;
+}
+
+body.budgets-page .budgets-footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+body.budgets-page .budgets-footer-column ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+body.budgets-page .budgets-footer-column ul li a:hover {
+    color: var(--accent-color);
+}
+
+body.budgets-page .footer-logo {
+    width: 120px;
+    margin-bottom: 1rem;
+}
+
+/* Income Page CSS */
+
+body.income-page {
+    background-color: var(--light-bg);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.income-page .income-navbar {
+    width: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.income-page .income-logo img {
+    width: 90px;
+    transition: var(--transition);
+}
+
+body.income-page .income-logo img:hover {
+    transform: scale(1.05);
+}
+
+body.income-page .income-nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+body.income-page .income-nav-links a {
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+body.income-page .income-nav-links a:hover {
+    color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    body.income-page .income-navbar {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    body.income-page .income-nav-links {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+body.income-page .income-hero-banner {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 90%;
+    margin: 30px auto;
+    background-color: var(--light-bg);
+}
+
+body.income-page .income-hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    padding: 2rem;
+}
+
+body.income-page .income-hero-text {
+    flex: 1;
+}
+
+body.income-page .income-hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+body.income-page .income-subtitle {
+    font-size: 1.3rem;
+     text-align: center;
+}
+
+body.income-page .stock-img {
+    width: 320px;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    body.income-page .income-hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    body.income-page .stock-img {
+        width: 80%;
+    }
+}
+
+body.income-page .income-footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 0.95rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+body.income-page .income-footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+body.income-page .income-footer-column {
+    flex: 1 1 250px;
+}
+
+body.income-page .income-footer-column h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #F28B30;
+}
+
+body.income-page .income-footer-column ul {
+    list-style: none;
+}
+
+body.income-page .income-footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+body.income-page .income-footer-column ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+body.income-page .income-footer-column ul li a:hover {
+    color: var(--accent-color);
+}
+
+body.income-page .footer-logo {
+    width: 120px;
+    margin-bottom: 1rem;
+}
+
+/* Monthly_Summary Page CSS */
+
+body.monthly-summary-page {
+    background-color: var(--light-bg);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.monthly-summary-page .monthly-summary-navbar {
+    width: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.monthly-summary-page .monthly-summary-logo img {
+    width: 90px;
+    transition: var(--transition);
+}
+
+body.monthly-summary-page .monthly-summary-logo img:hover {
+    transform: scale(1.05);
+}
+
+body.monthly-summary-page .monthly-summary-nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+body.monthly-summary-page .monthly-summary-nav-links a {
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+body.monthly-summary-page .monthly-summary-nav-links a:hover {
+    color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    body.monthly-summary-page .monthly-summary-navbar {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    body.monthly-summary-page .monthly-summary-nav-links {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+body.monthly-summary-page .monthly-summary-hero-banner {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 90%;
+    margin: 30px auto;
+    background-color: var(--light-bg);
+}
+
+body.monthly-summary-page .monthly-summary-hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    padding: 2rem;
+}
+
+body.monthly-summary-page .monthly-summary-hero-text {
+    flex: 1;
+}
+
+body.monthly-summary-page .monthly-summary-hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+body.monthly-summary-page .monthly-summary-subtitle {
+    font-size: 1.3rem;
+     text-align: center;
+}
+
+body.monthly-summary-page .stock-img {
+    width: 320px;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    body.monthly-summary-page .monthly-summary-hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    body.monthly-summary-page .stock-img {
+        width: 80%;
+    }
+}
+
+body.monthly-summary-page .monthly-summary-footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 0.95rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+body.monthly-summary-page .monthly-summary-footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+body.monthly-summary-page .monthly-summary-footer-column {
+    flex: 1 1 250px;
+}
+
+body.monthly-summary-page .monthly-summary-footer-column h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #F28B30;
+}
+
+body.monthly-summary-page .monthly-summary-footer-column ul {
+    list-style: none;
+}
+
+body.monthly-summary-page .monthly-summary-footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+body.monthly-summary-page .monthly-summary-footer-column ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+body.monthly-summary-page .monthly-summary-footer-column ul li a:hover {
+    color: var(--accent-color);
+}
+
+body.monthly-summary-page .footer-logo {
+    width: 120px;
+    margin-bottom: 1rem;
+}
+
+/* Categories Page CSS */
+
+body.categories-page {
+    background-color: var(--light-bg);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.categories-page .categories-navbar {
+    width: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.categories-page .categories-logo img {
+    width: 90px;
+    transition: var(--transition);
+}
+
+body.categories-page .categories-logo img:hover {
+    transform: scale(1.05);
+}
+
+body.categories-page .categories-nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+body.categories-page .categories-nav-links a {
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+body.categories-page .categories-nav-links a:hover {
+    color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    body.categories-page .categories-navbar {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    body.categories-page .categories-nav-links {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+body.categories-page .categories-hero-banner {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 90%;
+    margin: 30px auto;
+    background-color: var(--light-bg);
+}
+
+body.categories-page .categories-hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    padding: 2rem;
+}
+
+body.categories-page .categories-hero-text {
+    flex: 1;
+}
+
+body.categories-page .categories-hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+body.categories-page .categories-subtitle {
+    font-size: 1.3rem;
+     text-align: center;
+}
+
+body.categories-page .stock-img {
+    width: 320px;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    body.categories-page .categories-hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    body.categories-page .stock-img {
+        width: 80%;
+    }
+}
+
+body.categories-page .categories-footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 0.95rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+body.categories-page .categories-footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+body.categories-page .categories-footer-column {
+    flex: 1 1 250px;
+}
+
+body.categories-page .categories-footer-column h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #F28B30;
+}
+
+body.categories-page .categories-footer-column ul {
+    list-style: none;
+}
+
+body.categories-page .categories-footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+body.categories-page .categories-footer-column ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+body.categories-page .categories-footer-column ul li a:hover {
+    color: var(--accent-color);
+}
+
+body.categories-page .footer-logo {
+    width: 120px;
+    margin-bottom: 1rem;
+}
+
+/* Logout Page CSS */
+
+body.logout-page {
+    margin: 0;
+    background-color: var(--light-bg);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.logout-page .navbar {
+    width: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.logout-page .logo img {
+    width: 90px;
+    transition: var(--transition);
+}
+
+body.logout-page .logo img:hover {
+    transform: scale(1.05);
+}
+
+body.logout-page .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+body.logout-page .nav-links a {
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+body.logout-page .nav-links a:hover {
+    color: var(--accent-color);
+}
+
+body.logout-page .hero-banner {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 90%;
+    margin: 30px auto;
+    background-color: var(--light-bg);
+    text-align: center;
+}
+
+body.logout-page .hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+body.logout-page .subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+}
+
+body.logout-page form button {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+body.logout-page form button:hover {
+    background-color: var(--accent-color);
+}
+
+@media (max-width: 768px) {
+    body.logout-page .navbar {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    body.logout-page .nav-links {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    body.logout-page .hero-banner {
+        height: auto;
+        padding: 2rem 1rem;
+    }
+}
