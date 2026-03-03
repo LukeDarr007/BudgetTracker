@@ -1,13 +1,3 @@
-<?php
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,6 +39,69 @@ if (!isset($_SESSION['user_id'])) {
     <main class="dashboard-main">
         <h2 class="dashboard-heading">Welcome Back, User!</h2>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Buff Budgets</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+    <a href="index.php">Home</a>
+    <a href="logout.php">Logout</a>
+</nav>
+
+<header>
+    <h1>Welcome, <?php echo htmlspecialchars($name); ?>!</h1>
+</header>
+
+<section class="summary">
+    <div class="card">
+        <h3>Total Budget</h3>
+        <p>$<?php echo number_format($total_budget, 2); ?></p>
+    </div>
+    <div class="card">
+        <h3>Total Expenses</h3>
+        <p>$<?php echo number_format($total_expenses, 2); ?></p>
+    </div>
+    <div class="card">
+        <h3>Remaining</h3>
+        <p>$<?php echo number_format($total_budget - $total_expenses, 2); ?></p>
+    </div>
+</section>
+
+<section class="transactions">
+    <h2>Recent Transactions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($transactions as $t): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($t['description']); ?></td>
+                <td>$<?php echo number_format($t['amount'], 2); ?></td>
+                <td><?php echo $t['date']; ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</section>
+
+<section class="actions">
+    <a href="add_budget.php">Add Budget</a>
+    <a href="add_expense.php">Add Expense</a>
+</section>
+
+</body>
+</html>
 
             </div>
 </main>
