@@ -29,9 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="dashboard.php"><img src="logo.png" alt="Buff Budgets Logo"></a>
         </div>
         <ul class="nav-links">
-            <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="account.php">Account</a></li>
-            <li><a href="expenses.php">Expenses</a></li>
+            
+        <li><a href="dashboard.php">Dashboard</a></li>
+        <li><a href="account.php">Account</a></li>
+        <li><a href="expenses.php">Expenses</a></li>
+        <li><a href="budgets.php">Budgets</a></li>
+        <li><a href="income.php">Income</a></li>
+        <li><a href="monthly_summary.php">Monthly Summary</a></li>
+        <li><a href="categories.php">Categories</a></li>
+        <li><a href="logout.php">Logout</a></li>
+        </ul>
+
+</nav>
         </ul>
     </nav>
 
