@@ -2,14 +2,11 @@
 session_start();
 include 'db.php';
 
-
 $message = "";
-
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
-
 
     $sql = "SELECT * FROM User WHERE email = ?";
     $stmt = $conn->prepare($sql);
@@ -25,6 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['role'] = $row['role'];
+            $_SESSION['first_name'] = $row['first_name'];
+            $_SESSION['last_name'] = $row['last_name'];
 
             header("Location: dashboard.php");
             exit();
@@ -42,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
     <title>Login | Buff Budgets</title>
     <style>
         .error {
@@ -71,7 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <img src="logo 2.png" alt="Buff Budgets Logo" class="register-logo">
         <h2>Login</h2>
         <p class="register-subtitle">Access your budget dashboard</p>
-
 
         <?php if($message): ?>
             <p class="error"><?php echo htmlspecialchars($message); ?></p>
