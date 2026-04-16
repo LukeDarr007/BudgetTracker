@@ -2,68 +2,170 @@
 include 'db.php';
 
 $message = "";
+$messageType = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $first_name = $_POST['first_name'];
-    $last_name  = $_POST['last_name'];
-    $email      = $_POST['email'];
-    $password   = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $address    = $_POST['address'];
-    $role       = 'User';
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $initials = strtoupper($first_name[0] . $last_name[0]);
-    $random_number = rand(100, 999);
-    $user_id = $initials . "BT" . $random_number;
+    $first_name = trim($_POST['first_name']);
+    $last_name  = trim($_POST['last_name']);
+    $email      = trim($_POST['email']);
+    $phone      = trim($_POST['phone']);
+    $address    = trim($_POST['address']);
+    $password_raw = $_POST['password'];
 
-    $sql = "INSERT INTO User (user_id, first_name, last_name, email, password, address, role)
-            VALUES ('$user_id', '$first_name', '$last_name', '$email', '$password', '$address', '$role')";
+    if (!preg_match("/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/", $password_raw)) {
+        $message = "Password must be 8+ characters, include a capital letter, number and special character.";
+        $messageType = "error";
+    }
 
-    if ($conn->query($sql) === TRUE) {
-        $message = "Registration successful! Your User ID is $user_id";
-    } else {
-        $message = "Error: " . $conn->error;
+    elseif (!preg_match("/^[0-9]{10,15}$/", $phone)) {
+        $message = "Phone number must be 10–15 digits.";
+        $messageType = "error";
+    }
+
+    elseif (strlen($address) < 5) {
+        $message = "Please enter a valid address.";
+        $messageType = "error";
+    }
+
+    else {
+
+        $check = $conn->prepare("SELECT user_id FROM User WHERE email = ?");
+        $check->bind_param("s", $email);
+        $check->execute();
+        $result = $check->get_result();
+
+        if ($result->num_rows > 0) {
+            $message = "This account already exists.";
+            $messageType = "error";
+        }
+
+        else {
+
+            $password = password_hash($password_raw, PASSWORD_DEFAULT);
+
+            $initials = strtoupper($first_name[0] . $last_name[0]);
+            $user_id = $initials . "BT" . rand(100,999);
+
+            $stmt = $conn->prepare("
+                INSERT INTO User 
+                (user_id, first_name, last_name, email, password, phone, address, role)
+                VALUES (?, ?, ?, ?, ?, ?, ?, 'User')
+            ");
+
+            $stmt->bind_param(
+                "sssssss",
+                $user_id,
+                $first_name,
+                $last_name,
+                $email,
+                $password,
+                $phone,
+                $address
+            );
+
+            if ($stmt->execute()) {
+                $message = "Account created successfully. Your ID: " . $user_id;
+                $messageType = "success";
+            } else {
+                $message = "Error creating account.";
+                $messageType = "error";
+            }
+        }
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Register | Buff Budgets</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+<title>Register</title>
+
+<style>
+.register-message {
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.register-message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.register-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+</style>
+
 </head>
+
 <body class="register-page">
-    <nav class="register-navbar">
-        <div class="index-logo">
-             <a href="index.html"><img src="logo.png" alt="Buff Budgets Logo"></a>
-        </div>
-        <ul class="index-nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="login.php">Login</a></li>
-            <li><a href="register.php">Register</a></li>
-        </ul>
-    </nav>
 
-
-    <?php if($message) echo "<p>$message</p>"; ?>
-
-    <div class="register-container">
-        <div class="register-card">
-            <img src="logo 2.png" alt="Buff Budgets Logo" class="register-logo">
-            <h2>Register For An Account</h2>
-            <p class="register-subtitle">Manage your budgets with confidence</p>
-
-            <form class="register-form" method="POST" action="">
-                <input type="text" name="first_name" placeholder="First Name" required>
-                <input type="text" name="last_name" placeholder="Last Name" required>
-                <input type="email" name="email" placeholder="Email Address" required>
-                <input type="text" name="phone" placeholder="Phone Number" required>
-                <input type="text" name="address" placeholder="Address" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <button type="submit" class="register-btn">Create Account</button>
-            </form>
-        </div>
+<nav class="register-navbar">
+    <div class="index-logo">
+        <a href="index.html"><img src="logo.png"></a>
     </div>
+    <ul class="index-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.php">Login</a></li>
+        <li><a href="register.php">Register</a></li>
+    </ul>
+</nav>
+
+<div class="register-container">
+    <div class="register-card">
+
+        <img src="logo 2.png" class="register-logo">
+        <h2>Create Account</h2>
+
+        <?php if (!empty($message)): ?>
+            <div class="register-message <?php echo $messageType; ?>">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
+
+        <form class="register-form" method="POST">
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="text" name="phone" placeholder="Phone Number" required>
+            <input type="text" name="address" placeholder="Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+
+            <button type="submit" class="register-btn">Create Account</button>
+        </form>
+
+    </div>
+</div>
+
+<footer class="index-footer">
+        <div class="index-footer-container">
+            <div class="index-footer-column">
+                <img src="logo.png" alt="Buff Budgets Logo" class="footer-logo">
+                <p>© 2026 Buff Budgets. All rights reserved.</p>
+            </div>
+            <div class="index-footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="index-footer-column">
+                <h4>Contact Us</h4>
+                <p>Tel: (01321) 2340 235</p>
+                <p>Email: info@buffbudgets.com</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>

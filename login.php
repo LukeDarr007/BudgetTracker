@@ -18,12 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $row = $result->fetch_assoc();
 
         if (password_verify($password, $row['password'])) {
-
             $_SESSION['user_id'] = $row['user_id'];
-            $_SESSION['email'] = $row['email'];
-            $_SESSION['role'] = $row['role'];
             $_SESSION['first_name'] = $row['first_name'];
             $_SESSION['last_name'] = $row['last_name'];
+            $_SESSION['email'] = $row['email'];
 
             header("Location: dashboard.php");
             exit();
@@ -35,28 +33,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
-    <title>Login | Buff Budgets</title>
-    <style>
-        .error {
-            color: red;
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+<title>Login</title>
 </head>
-<body class="register-page">
 
-<nav class="register-navbar">
+<body class="login-page">
+
+<nav class="login-navbar">
     <div class="index-logo">
-        <a href="index.html"><img src="logo.png" alt="Buff Budgets Logo"></a>
+        <a href="index.html"><img src="logo.png"></a>
     </div>
     <ul class="index-nav-links">
         <li><a href="index.html">Home</a></li>
@@ -65,38 +55,45 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </ul>
 </nav>
 
-<div class="register-container">
-    <div class="register-card">
-        <img src="logo 2.png" alt="Buff Budgets Logo" class="register-logo">
+<div class="login-container">
+    <div class="login-card">
+        <img src="logo 2.png" class="login-logo">
         <h2>Login</h2>
-        <p class="register-subtitle">Access your budget dashboard</p>
 
-        <?php if($message): ?>
-            <p class="error"><?php echo htmlspecialchars($message); ?></p>
+        <?php if ($message): ?>
+            <p style="color:red;text-align:center;"><?php echo htmlspecialchars($message); ?></p>
         <?php endif; ?>
 
-        <form class="register-form" method="POST" action="">
-            <input 
-                type="email" 
-                name="email" 
-                placeholder="Email Address"
-                value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
-                required
-            >
+        <form class="login-form" method="POST">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button class="login-btn">Login</button>
 
-            <input 
-                type="password" 
-                name="password" 
-                placeholder="Password"
-                required
-            >
-
-            <button type="submit" class="register-btn">
-                Login
-            </button>
+            <a href="forgot_password.php" class="forgot-link">Forgot Password?</a>
         </form>
     </div>
 </div>
+
+<footer class="index-footer">
+        <div class="index-footer-container">
+            <div class="index-footer-column">
+                <img src="logo.png" alt="Buff Budgets Logo" class="footer-logo">
+                <p>© 2026 Buff Budgets. All rights reserved.</p>
+            </div>
+            <div class="index-footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="index-footer-column">
+                <h4>Contact Us</h4>
+                <p>Tel: (01321) 2340 235</p>
+                <p>Email: info@buffbudgets.com</p>
+            </div>
+        </div>
+    </footer>
+
 
 </body>
 </html>
