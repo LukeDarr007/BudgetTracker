@@ -495,6 +495,40 @@ body.register-page {
 
 /* DASHBOARD PAGE CSS */
 
+.dashboard-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.dashboard-hero-banner {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.dashboard-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.dashboard-main h2 {
+    text-align: center;
+}
+
+.summary {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    text-align: center;
+}
+
+
 body.dashboard-page {
     background-color: var(--light-bg);
     font-family: 'Roboto', sans-serif;
@@ -503,50 +537,46 @@ body.dashboard-page {
 }
 
 .dashboard-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    background-color: var(--primary-color);
+    background-color: #1B5E20;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 2rem;
+    padding: 15px 40px;
+    z-index: 1000;
 }
 
 .dashboard-logo img {
-    width: 90px;
+    height: 50px;
 }
 
 .dashboard-nav-links {
     display: flex;
     list-style: none;
-    gap: 1.5rem;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
 }
 
 .dashboard-nav-links a {
-    color: var(--white);
+    color: white;
     text-decoration: none;
     font-weight: bold;
-    transition: var(--transition);
 }
 
 .dashboard-nav-links a:hover {
-    color: var(--accent-color);
+    color: #A5D6A7;
 }
 
-.dashboard-hero-banner {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
+.dashboard-footer {
+    background-color: #1f2937;
     color: white;
-    padding: 40px 20px;
     text-align: center;
-}
-
-.dashboard-hero-banner h1 {
-    font-size: 2.5rem;
-}
-
-.dashboard-main {
-    max-width: 1200px;
-    margin: auto;
-    padding: 40px 20px;
+    padding: 20px;
+    margin-top: auto;
 }
 
 .summary {
@@ -652,6 +682,28 @@ body.dashboard-page {
     .summary {
         flex-direction: column;
     }
+}
+
+html, body {
+    height: 100%;
+}
+
+body.dashboard-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main.dashboard-main {
+    flex: 1;
+}
+
+.expenses-footer {
+    background-color:  #1f2937;
+    color: var(--white);
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
 }
 
 /*LOGOUT PAGE CSS*/
@@ -768,4 +820,287 @@ body.dashboard-page {
     .logout-page .hero-banner .hero-text {
         padding: 2rem 1rem;
     }
+}
+
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+}
+
+body.expenses-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+.expenses-main {
+    flex: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+
+.expense-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.expense-form input,
+.expense-form button {
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.expense-form input {
+    flex: 1 1 200px;
+    max-width: 250px;
+}
+
+.expense-form button {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+}
+
+.expense-form button:hover {
+    background: #154a19;
+}
+
+
+.transactions {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    text-align: left;
+    margin-top: 20px;
+}
+
+.transactions th,
+.transactions td {
+    padding: 12px;
+}
+
+.transactions th {
+    background: #1f2937;
+    color: white;
+}
+
+.transactions tr:hover {
+    background-color: #f3f4f6;
+}
+
+
+.dashboard-footer {
+    margin-top: auto;
+}
+
+
+body {
+    padding-top: 80px;
+}
+
+
+/*NAVBAR CSS*/
+
+.main-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    z-index: 1000;
+}
+
+body {
+    padding-top: 80px;
+}
+
+.navbar {
+    width: 100%;
+    height: 80px;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+/*INCOME CSS*/ 
+
+.income-page {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #f4f6f8;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1B5E20;
+    padding: 15px 30px;
+}
+
+.navbar img {
+    height: 40px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #c8e6c9;
+}
+
+.income-hero-banner {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), #2e7d32;
+    padding: 70px 20px;
+    text-align: center;
+    color: white;
+}
+
+.income-hero-banner h1 {
+    margin: 0;
+    font-size: 42px;
+}
+
+.income-hero-banner p {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.income-main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.income-main h2 {
+    margin-bottom: 15px;
+    color: #1B5E20;
+}
+
+.income-form {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.income-form input {
+    flex: 1;
+    min-width: 150px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.income-form button {
+    background: #1B5E20;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.income-form button:hover {
+    background: #145214;
+}
+
+.transactions {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.transactions th,
+.transactions td {
+    padding: 14px;
+    text-align: left;
+}
+
+.transactions th {
+    background: #1B5E20;
+    color: white;
+}
+
+.transactions tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.transactions tr:hover {
+    background: #e8f5e9;
+}
+
+.income-footer {
+    background: #1B5E20;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
 }

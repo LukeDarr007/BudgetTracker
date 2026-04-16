@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="logout-page">
 
-    <nav class="navbar">
+    <nav class="main-navbar">
         <div class="logo">
             <a href="dashboard.php"><img src="logo.png" alt="Buff Budgets Logo"></a>
         </div>

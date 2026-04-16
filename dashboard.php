@@ -12,8 +12,7 @@ $first_name = $_SESSION['first_name'] ?? "User";
 $last_name = $_SESSION['last_name'] ?? "";
 
 $total_income = 0;
-$sql = "SELECT SUM(amount) AS total FROM income WHERE user_id=?";
-$stmt = $conn->prepare($sql);
+$stmt = $conn->prepare("SELECT SUM(amount) AS total FROM income WHERE user_id=?");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -21,8 +20,7 @@ $row = $result->fetch_assoc();
 $total_income = $row['total'] ?? 0;
 
 $total_expenses = 0;
-$sql = "SELECT SUM(amount) AS total FROM expense WHERE user_id=?";
-$stmt = $conn->prepare($sql);
+$stmt = $conn->prepare("SELECT SUM(amount) AS total FROM expense WHERE user_id=?");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -30,8 +28,7 @@ $row = $result->fetch_assoc();
 $total_expenses = $row['total'] ?? 0;
 
 $incomes = [];
-$sql = "SELECT income_id, description, amount, date FROM income WHERE user_id=? ORDER BY date DESC LIMIT 5";
-$stmt = $conn->prepare($sql);
+$stmt = $conn->prepare("SELECT income_id, description, amount, date FROM income WHERE user_id=? ORDER BY date DESC LIMIT 5");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -40,8 +37,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 $expenses = [];
-$sql = "SELECT expense_id, description, amount, date FROM expense WHERE user_id=? ORDER BY date DESC LIMIT 5";
-$stmt = $conn->prepare($sql);
+$stmt = $conn->prepare("SELECT expense_id, description, amount, date FROM expense WHERE user_id=? ORDER BY date DESC LIMIT 5");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -57,12 +53,31 @@ while ($row = $result->fetch_assoc()) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard - Buff Budgets</title>
 <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+.dashboard-flex {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.chart-container {
+    width: 400px;
+    height: 400px;
+}
+
+.dashboard-right {
+    flex: 1;
+}
+</style>
 </head>
+
 <body class="dashboard-page">
 
-<nav class="dashboard-navbar">
+<nav class="navbar">
     <div class="dashboard-logo">
-        <a href="dashboard.php"><img src="logo.png" alt="Buff Budgets Logo"></a>
+        <a href="dashboard.php"><img src="logo.png"></a>
     </div>
     <ul class="dashboard-nav-links">
         <li><a href="dashboard.php">Dashboard</a></li>
@@ -77,11 +92,21 @@ while ($row = $result->fetch_assoc()) {
 </nav>
 
 <header class="dashboard-hero-banner">
-    <h1>Welcome, <?php echo htmlspecialchars($first_name . ' ' . $last_name); ?>!</h1>
+<h1>Welcome, <?php echo htmlspecialchars($first_name . ' ' . $last_name); ?>!</h1>
 </header>
 
 <main class="dashboard-main">
+
+<div class="dashboard-flex">
+
+<div class="chart-container">
+<canvas id="financeChart"></canvas>
+</div>
+
+<div class="dashboard-right">
+
 <h2>Your Financial Overview</h2>
+
 <section class="summary">
     <div class="card">
         <h3>Total Income</h3>
@@ -98,6 +123,7 @@ while ($row = $result->fetch_assoc()) {
 </section>
 
 <section class="transactions">
+
 <h2>Recent Income</h2>
 <table>
 <thead>
@@ -141,16 +167,41 @@ while ($row = $result->fetch_assoc()) {
 <?php endforeach; ?>
 </tbody>
 </table>
+
 </section>
 
 <section class="actions">
 <a href="add_income.php">Add Income</a>
-<a href="add_expense.php">Add Expense</a>
+<a href="expenses.php">Add Expense</a>
 </section>
+
+</div>
+
+</div>
+
 </main>
 
 <footer class="dashboard-footer">
 <p>© 2026 Buff Budgets</p>
 </footer>
+
+<script>
+window.onload = function() {
+    new Chart(document.getElementById('financeChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Income', 'Expenses'],
+            datasets: [{
+                data: [<?php echo $total_income ?: 1; ?>, <?php echo $total_expenses ?: 1; ?>],
+                backgroundColor: ['#4CAF50', '#F44336']
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+};
+</script>
+
 </body>
 </html>

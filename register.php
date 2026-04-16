@@ -58,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" name="first_name" placeholder="First Name" required>
                 <input type="text" name="last_name" placeholder="Last Name" required>
                 <input type="email" name="email" placeholder="Email Address" required>
+                <input type="text" name="phone" placeholder="Phone Number" required>
                 <input type="text" name="address" placeholder="Address" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit" class="register-btn">Create Account</button>
