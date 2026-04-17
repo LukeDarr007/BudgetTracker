@@ -1,8 +1,24 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include 'db.php';
+session_start();
 
 $message = "";
 $messageType = "";
+
+$questions = [
+    "What was your childhood pet's name?",
+    "What is your mother's maiden name?",
+    "What is your favourite holiday destination?"
+];
+
+if (!isset($_SESSION['security_question'])) {
+    $_SESSION['security_question'] = $questions[array_rand($questions)];
+}
+
+$selected_question = $_SESSION['security_question'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -12,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $phone      = trim($_POST['phone']);
     $address    = trim($_POST['address']);
     $password_raw = $_POST['password'];
+    $security_answer = isset($_POST['security_answer']) ? trim($_POST['security_answer']) : "";
 
     if (!preg_match("/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/", $password_raw)) {
         $message = "Password must be 8+ characters, include a capital letter, number and special character.";
@@ -25,6 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     elseif (strlen($address) < 5) {
         $message = "Please enter a valid address.";
+        $messageType = "error";
+    }
+
+    elseif ($security_answer === "") {
+        $message = "Please answer the security question.";
         $messageType = "error";
     }
 
@@ -43,30 +65,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         else {
 
             $password = password_hash($password_raw, PASSWORD_DEFAULT);
-
             $initials = strtoupper($first_name[0] . $last_name[0]);
             $user_id = $initials . "BT" . rand(100,999);
+            $role = "User";
 
             $stmt = $conn->prepare("
                 INSERT INTO User 
-                (user_id, first_name, last_name, email, password, phone, address, role)
-                VALUES (?, ?, ?, ?, ?, ?, ?, 'User')
+                (user_id, first_name, last_name, email, password, phone, address, role, security_question, security_answer)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ");
 
             $stmt->bind_param(
-                "sssssss",
+                "ssssssssss",
                 $user_id,
                 $first_name,
                 $last_name,
                 $email,
                 $password,
                 $phone,
-                $address
+                $address,
+                $role,
+                $selected_question,
+                $security_answer
             );
 
             if ($stmt->execute()) {
                 $message = "Account created successfully. Your ID: " . $user_id;
                 $messageType = "success";
+                unset($_SESSION['security_question']);
             } else {
                 $message = "Error creating account.";
                 $messageType = "error";
@@ -75,7 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,20 +117,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     font-weight: bold;
     text-align: center;
 }
-
 .register-message.success {
     background: #d4edda;
     color: #155724;
-    border: 1px solid #c3e6cb;
 }
-
 .register-message.error {
     background: #f8d7da;
     color: #721c24;
-    border: 1px solid #f5c6cb;
 }
 </style>
-
 </head>
 
 <body class="register-page">
@@ -141,31 +161,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="text" name="address" placeholder="Address" required>
             <input type="password" name="password" placeholder="Password" required>
 
+            <input type="text" value="<?php echo htmlspecialchars($selected_question); ?>" readonly>
+            <input type="text" name="security_answer" placeholder="Your Answer">
+
             <button type="submit" class="register-btn">Create Account</button>
         </form>
 
     </div>
 </div>
-
-<footer class="index-footer">
-        <div class="index-footer-container">
-            <div class="index-footer-column">
-                <img src="logo.png" alt="Buff Budgets Logo" class="footer-logo">
-                <p>© 2026 Buff Budgets. All rights reserved.</p>
-            </div>
-            <div class="index-footer-column">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.html">Dashboard</a></li>
-                </ul>
-            </div>
-            <div class="index-footer-column">
-                <h4>Contact Us</h4>
-                <p>Tel: (01321) 2340 235</p>
-                <p>Email: info@buffbudgets.com</p>
-            </div>
-        </div>
-    </footer>
 
 </body>
 </html>
