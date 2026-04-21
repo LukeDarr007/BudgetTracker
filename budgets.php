@@ -54,30 +54,31 @@ if (!isset($_SESSION['user_id'])) {
 </main>
 
 
-    <footer class="budgets-footer">
-        <div class="budgets-footer-container footer-container">
-            <div class="budgets-footer-column footer-column">
-                <img src="logo.png" alt="Buff Budgets Logo" class="footer-logo">
-                <p>© 2026 Buff Budgets. All rights reserved.</p>
-            </div>
-            <div class="budgets-footer-column footer-column">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="account.php">Account</a></li>
-                    <li><a href="expenses.php">Expenses</a></li>
-                    <li><a href="budgets.php">Budgets</a></li>
-                </ul>
-            </div>
-            <div class="budgets-footer-column footer-column">
-                <h4>Contact Us</h4>
-                <p>Tel: (01321) 2340 235</p>
-                <p>Fax: (01321) 2340 236</p>
-                <p>Email: <a href="mailto:info@buffbudgets.com">info@buffbudgets.com</a></p>
-            </div>
+    <footer class="index-footer">
+    <div class="index-footer-container">
+        <div class="index-footer-column">
+            <img src="logo.png" class="footer-logo">
+            <p>© 2026 Buff Budgets. All rights reserved.</p>
         </div>
-    </footer>
 
+        <div class="index-footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="account.php">Account</a></li>
+                <li><a href="expenses.php">Expenses</a></li>
+                <li><a href="budgets.php">Budgets</a></li>
+                <li><a href="income.php">Income</a></li>
+            </ul>
+        </div>
+
+        <div class="index-footer-column">
+            <h4>Contact Us</h4>
+            <p>Tel: (01321) 2340 235</p>
+            <p>Email: info@buffbudgets.com</p>
+        </div>
+    </div>
+</footer>
     <script src="3Javascript/script.js"></script>
 
 </body>

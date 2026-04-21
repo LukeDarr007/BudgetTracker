@@ -181,8 +181,26 @@ while ($row = $result->fetch_assoc()) {
 
 </main>
 
-<footer class="dashboard-footer">
-<p>© 2026 Buff Budgets</p>
+<footer class="index-footer">
+    <div class="index-footer-container">
+        <div class="index-footer-column">
+            <img src="logo.png" class="footer-logo">
+            <p>© 2026 Buff Budgets. All rights reserved.</p>
+        </div>
+
+        <div class="index-footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+
+        <div class="index-footer-column">
+            <h4>Contact Us</h4>
+            <p>Tel: (01321) 2340 235</p>
+            <p>Email: info@buffbudgets.com</p>
+        </div>
+    </div>
 </footer>
 
 <script>

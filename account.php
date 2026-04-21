@@ -65,153 +65,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
 
-<style>
-body.account-page {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #f4f6f8;
-}
 
-/* NAV */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: #1B5E20;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    z-index: 1000;
-}
 
-.nav-links {
-    display: flex;
-    gap: 15px;
-    list-style: none;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-/* LAYOUT */
-.account-wrapper {
-    display: flex;
-    gap: 25px;
-    padding: 120px 40px 40px;
-}
-
-/* SIDEBAR */
-.sidebar {
-    width: 28%;
-    background: #1B5E20;
-    color: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-}
-
-.sidebar h2 {
-    margin: 0 0 10px 0;
-}
-
-/* MAIN CARD */
-.content {
-    flex: 1;
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-}
-
-h2 {
-    margin-bottom: 20px;
-}
-
-/* FORM */
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-}
-
-input:focus {
-    border-color: #1B5E20;
-}
-
-/* BUTTONS */
-button {
-    padding: 12px;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    font-weight: bold;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.update {
-    background: #1B5E20;
-    color: white;
-}
-
-.update:hover {
-    background: #145016;
-}
-
-.delete {
-    background: #d32f2f;
-    color: white;
-}
-
-.delete:hover {
-    background: #a61f1f;
-}
-
-/* MESSAGE */
-.message {
-    background: #e8f5e9;
-    color: #1B5E20;
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-weight: 500;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .account-wrapper {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-    }
-}
-</style>
 
 </head>
 
 <body class="account-page">
 
 <nav class="navbar">
-    <div class="logo">
-        <a href="dashboard.php"><img src="logo.png" height="40"></a>
+    <div class="dashboard-logo">
+        <a href="dashboard.php"><img src="logo.png"></a>
     </div>
-
-    <ul class="nav-links">
+    <ul class="dashboard-nav-links">
         <li><a href="dashboard.php">Dashboard</a></li>
         <li><a href="account.php">Account</a></li>
         <li><a href="expenses.php">Expenses</a></li>
         <li><a href="budgets.php">Budgets</a></li>
         <li><a href="income.php">Income</a></li>
+        <li><a href="monthly_summary.php">Monthly Summary</a></li>
+        <li><a href="categories.php">Categories</a></li>
         <li><a href="logout.php">Logout</a></li>
     </ul>
 </nav>
@@ -252,6 +124,32 @@ button {
     </div>
 
 </div>
+
+<footer class="index-footer">
+    <div class="index-footer-container">
+        <div class="index-footer-column">
+            <img src="logo.png" class="footer-logo">
+            <p>© 2026 Buff Budgets. All rights reserved.</p>
+        </div>
+
+        <div class="index-footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="account.php">Account</a></li>
+                <li><a href="expenses.php">Expenses</a></li>
+                <li><a href="budgets.php">Budgets</a></li>
+                <li><a href="income.php">Income</a></li>
+            </ul>
+        </div>
+
+        <div class="index-footer-column">
+            <h4>Contact Us</h4>
+            <p>Tel: (01321) 2340 235</p>
+            <p>Email: info@buffbudgets.com</p>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>

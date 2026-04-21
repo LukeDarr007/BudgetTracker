@@ -178,6 +178,18 @@ body.index-page .footer-logo {
     margin-bottom: 1rem;
 }
 
+.index-hero-text {
+    flex: 1;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+
+
 .carousel {
     position: relative;
     width: 320px;
@@ -195,6 +207,10 @@ body.index-page .footer-logo {
 .carousel-text {
     flex: 1;
     text-align: center;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 
@@ -211,7 +227,7 @@ body.index-page .footer-logo {
 .features {
     width: 90%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 60px auto;
     display: flex;
     flex-direction: column;
     gap: 60px;
@@ -225,9 +241,10 @@ body.index-page .footer-logo {
 
 .feature-text {
     flex: 1;
-    padding: 2rem;
-    background-color: #F7F9F8;
-    border-radius: 12px;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 .feature-image {
@@ -267,9 +284,7 @@ body.login-page {
     margin: 0;
     font-family: 'Roboto', sans-serif;
     background: var(--light-bg);
-    padding-top: 80px;
 }
-
 
 .login-navbar {
     width: 100%;
@@ -277,10 +292,9 @@ body.login-page {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.70rem 2rem;
-    position: fixed;
+    padding: 0.5rem 2rem;
+    position: sticky;
     top: 0;
-    left: 0;
     z-index: 1000;
 }
 
@@ -300,13 +314,12 @@ body.login-page {
     color: var(--white);
     font-weight: bold;
     text-decoration: none;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
 }
 
 .login-navbar .index-nav-links a:hover {
     color: var(--accent-color);
 }
-
 
 .login-container {
     display: flex;
@@ -381,6 +394,7 @@ body.login-page {
     text-decoration: underline;
 }
 
+
 /* INDEX FOOTER */
 
 .index-footer {
@@ -446,15 +460,12 @@ body.login-page {
     text-decoration: none;
 }
 
-
-
 body.register-page {
     background: var(--light-bg);
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
 }
-
 
 .register-navbar {
     width: 100%;
@@ -560,6 +571,17 @@ body.register-page {
     color: var(--primary-color);
     font-weight: bold;
     text-decoration: none;
+}
+
+.login-message {
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
 /* DASHBOARD PAGE CSS */
@@ -775,6 +797,227 @@ main.dashboard-main {
     margin-top: auto;
 }
 
+/*ACCOUNT PAGE CSS*/
+
+body.account-page {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f4f6f8;
+}
+
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #1B5E20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    z-index: 1000;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+
+.account-wrapper {
+    display: flex;
+    gap: 25px;
+    padding: 120px 40px 40px;
+}
+
+
+.sidebar {
+    width: 28%;
+    background: #1B5E20;
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.sidebar h2 {
+    margin: 0 0 10px 0;
+}
+
+
+.content {
+    flex: 1;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #1B5E20;
+}
+
+
+button {
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.update {
+    background: #1B5E20;
+    color: white;
+}
+
+.update:hover {
+    background: #145016;
+}
+
+.delete {
+    background: #d32f2f;
+    color: white;
+}
+
+.delete:hover {
+    background: #a61f1f;
+}
+
+
+.message {
+    background: #e8f5e9;
+    color: #1B5E20;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+
+@media (max-width: 768px) {
+    .account-wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+}
+
+/*EXPENSES PAGE CSS*/
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+}
+
+body.expenses-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+.expenses-main {
+    flex: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+
+.expense-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.expense-form input,
+.expense-form button {
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.expense-form input {
+    flex: 1 1 200px;
+    max-width: 250px;
+}
+
+.expense-form button {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+}
+
+.expense-form button:hover {
+    background: #154a19;
+}
+
+
+.transactions {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    text-align: left;
+    margin-top: 20px;
+}
+
+.transactions th,
+.transactions td {
+    padding: 12px;
+}
+
+.transactions th {
+    background: #1f2937;
+    color: white;
+}
+
+.transactions tr:hover {
+    background-color: #f3f4f6;
+}
+
+
+.dashboard-footer {
+    margin-top: auto;
+}
+
 /*LOGOUT PAGE CSS*/
 
 .logout-page {
@@ -889,95 +1132,6 @@ main.dashboard-main {
     .logout-page .hero-banner .hero-text {
         padding: 2rem 1rem;
     }
-}
-
-
-
-html, body {
-    height: 100%;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    color: var(--text-color);
-    background-color: var(--light-bg);
-}
-
-body.expenses-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-
-.expenses-main {
-    flex: 1;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    text-align: center;
-}
-
-
-.expense-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.expense-form input,
-.expense-form button {
-    padding: 12px;
-    border-radius: var(--radius);
-    border: 1px solid #ddd;
-    font-size: 1rem;
-}
-
-.expense-form input {
-    flex: 1 1 200px;
-    max-width: 250px;
-}
-
-.expense-form button {
-    background: var(--primary-color);
-    color: var(--white);
-    border: none;
-    cursor: pointer;
-}
-
-.expense-form button:hover {
-    background: #154a19;
-}
-
-
-.transactions {
-    width: 100%;
-    border-collapse: collapse;
-    background: var(--white);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    text-align: left;
-    margin-top: 20px;
-}
-
-.transactions th,
-.transactions td {
-    padding: 12px;
-}
-
-.transactions th {
-    background: #1f2937;
-    color: white;
-}
-
-.transactions tr:hover {
-    background-color: #f3f4f6;
-}
-
-
-.dashboard-footer {
-    margin-top: auto;
 }
 
 
@@ -1168,135 +1322,108 @@ body.expenses-page {
     margin-top: 40px;
 }
 
-*/CONTACT US CSS */
+/*CONTACT US CSS */
 
-.contact-main {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    font-family: Arial, sans-serif;
+.contact-wrapper {
+    max-width: 1100px;
+    margin: 140px auto 80px auto;
+    padding: 0 20px;
 }
 
-
-.contact-info, 
-.contact-form {
-    background-color: #1B5E20; /* Buff Budgets green */
-    color: white;
-    padding: 2rem;
-    border-radius: 15px;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.contact-header {
     text-align: center;
+    margin-bottom: 50px;
 }
 
-.contact-info {
-  max-width: 800px;
-  margin: 60px auto;
-  padding: 20px;
-  background-color: #1B5E20;
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-  text-align: center;
-  t
+.contact-header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
 }
 
-.contact-info h2 {
-  font-size: 2rem;
-  color: white;
-  margin-bottom: 20px;
-  text-align: center;
+.contact-header p {
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.contact-info p {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: white;
-  margin: 10px 0;
-}
-
-.contact-info a {
-  color: white;
-  text-decoration: none;
-  transition: color 0.3s ease;
-  text-align: center;
-}
-
-.contact-info a:hover {
-  color: #0A437C;
-  text-decoration: underline;
-  text-align: center;
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
 }
 
 
-@media (max-width: 768px) {
-  .contact-info {
-    padding: 15px;
-  }
-
-  .contact-info h2 {
-    font-size: 1.7rem;
-  }
-
-  .contact-info p {
-    font-size: 1rem;
-  }
+.contact-card h2 {
+    margin-bottom: 10px;
 }
 
-
-
-.contact-info h2, 
-.contact-form h2 {
-    margin-bottom: 1rem;
-    font-size: 1.8rem;
+.contact-card p {
+    margin-bottom: 20px;
 }
-
 
 .contact-form form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 15px;
 }
 
-.contact-form input, 
+.contact-form input,
 .contact-form textarea {
-    padding: 0.75rem 1rem;
-    border: none;
+    padding: 12px;
     border-radius: 8px;
-    font-size: 1rem;
+    border: 1px solid #ccc;
+    width: 100%;
 }
 
 .contact-form button {
-    padding: 0.75rem 1.5rem;
+    padding: 12px;
     border: none;
     border-radius: 8px;
-    background-color: #F28B30; 
-    color: white;
+    background: #dfa1dc;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease;
 }
 
-.contact-form button:hover {
-    background-color: #e07b25;
+.contact-info p {
+    margin-bottom: 10px;
 }
 
-
-.contact-form a {
-    color: white;
-    text-decoration: underline;
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-
-.header h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+.contact-navbar {
+    width: 100%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.header p {
-    text-align: center;
+.contact-navbar .index-logo img {
+    width: 90px;
+}
+
+.contact-navbar .index-nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.contact-navbar .index-nav-links a {
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: none;
     font-size: 1.1rem;
-    margin-bottom: 2rem;
-    color: #2B2B2B;
+}
+
+.contact-navbar .index-nav-links a:hover {
+    color: var(--accent-color);
 }

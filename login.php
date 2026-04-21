@@ -51,20 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
 <title>Login</title>
-
-<style>
-.login-message {
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-</style>
-
 </head>
 
 <body class="login-page">
@@ -77,8 +63,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <li><a href="index.html">Home</a></li>
         <li><a href="login.php">Login</a></li>
         <li><a href="register.php">Register</a></li>
+        <li><a href="contact.php">Contact Us</a></li>
     </ul>
 </nav>
+
+
 
 <div class="login-container">
     <div class="login-card">
