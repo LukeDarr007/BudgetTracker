@@ -1,3 +1,5 @@
+/*This is the javascript for the carousel on the index page */
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const slides = [
