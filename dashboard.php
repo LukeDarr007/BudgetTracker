@@ -91,11 +91,13 @@ while ($row = $result->fetch_assoc()) {
     </ul>
 </nav>
 
+
+
+<main class="dashboard-main">
+
 <header class="dashboard-hero-banner">
 <h1>Welcome, <?php echo htmlspecialchars($first_name . ' ' . $last_name); ?>!</h1>
 </header>
-
-<main class="dashboard-main">
 
 <div class="dashboard-flex">
 
@@ -171,7 +173,7 @@ while ($row = $result->fetch_assoc()) {
 </section>
 
 <section class="actions">
-<a href="add_income.php">Add Income</a>
+<a href="income.php">Add Income</a>
 <a href="expenses.php">Add Expense</a>
 </section>
 
