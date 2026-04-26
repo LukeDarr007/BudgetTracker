@@ -8,7 +8,6 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-
 $message = "";
 
 if (isset($_POST['add_expense'])) {
@@ -17,22 +16,26 @@ if (isset($_POST['add_expense'])) {
     $amount = floatval($_POST['amount'] ?? 0);
     $date = $_POST['date'] ?? date('Y-m-d');
 
-    if ($description !== "" && $amount > 0) {
-
+    if ($description === "") {
+        $message = "Description required.";
+    }
+    elseif ($amount <= 0) {
+        $message = "Amount must be greater than 0.";
+    }
+    elseif ($amount > 1000000) {
+        $message = "Amount cannot exceed 1,000,000.";
+    }
+    else {
         $stmt = $conn->prepare("INSERT INTO expense (user_id, description, amount, date) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssds", $user_id, $description, $amount, $date);
-
         $stmt->execute();
         $stmt->close();
-
-        $message = "Expense added.";
-    } else {
-        $message = "Invalid input.";
+        header("Location: expenses.php?year=" . date('Y'));
+        exit();
     }
 }
 
 if (isset($_POST['delete_expense'])) {
-
     $expense_id = intval($_POST['expense_id']);
 
     $stmt = $conn->prepare("DELETE FROM expense WHERE expense_id=? AND user_id=?");
@@ -40,15 +43,24 @@ if (isset($_POST['delete_expense'])) {
     $stmt->execute();
     $stmt->close();
 
-    $message = "Expense deleted.";
+    header("Location: expenses.php");
+    exit();
 }
 
 $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
+$month = isset($_GET['month']) ? intval($_GET['month']) : 0;
+
 if ($year < 2000) $year = 2000;
 if ($year > 2026) $year = 2026;
 
-$stmt = $conn->prepare("SELECT expense_id, description, amount, date FROM expense WHERE user_id=? AND YEAR(date)=? ORDER BY date DESC");
-$stmt->bind_param("si", $user_id, $year);
+if ($month > 0) {
+    $stmt = $conn->prepare("SELECT expense_id, description, amount, date FROM expense WHERE user_id=? AND YEAR(date)=? AND MONTH(date)=? ORDER BY date DESC");
+    $stmt->bind_param("sii", $user_id, $year, $month);
+} else {
+    $stmt = $conn->prepare("SELECT expense_id, description, amount, date FROM expense WHERE user_id=? AND YEAR(date)=? ORDER BY date DESC");
+    $stmt->bind_param("si", $user_id, $year);
+}
+
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -69,8 +81,7 @@ foreach ($expenses as $e) {
     $monthly[$m] += $e['amount'];
 }
 
-$max = max($monthly);
-if ($max == 0) $max = 1;
+$max = 100000;
 ?>
 
 <!DOCTYPE html>
@@ -80,10 +91,9 @@ if ($max == 0) $max = 1;
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Expenses</title>
 <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
-
 </head>
 
-<body>
+<body class="expenses-page">
 
 <nav class="navbar">
     <div class="dashboard-logo">
@@ -93,15 +103,16 @@ if ($max == 0) $max = 1;
         <li><a href="dashboard.php">Dashboard</a></li>
         <li><a href="account.php">Account</a></li>
         <li><a href="expenses.php">Expenses</a></li>
-        <li><a href="budgets.php">Budgets</a></li>
         <li><a href="income.php">Income</a></li>
-        <li><a href="monthly_summary.php">Monthly Summary</a></li>
+        <li><a href="budgets.php">Budgets</a></li>
         <li><a href="categories.php">Categories</a></li>
-        <li><a href="logout.php">Logout</a></li>
+        <li><a href="monthly_summary.php">Monthly Summary</a></li>
     </ul>
 </nav>
 
 <main class="expenses-main">
+
+<h1 class="page-title">Add Your Expenses</h1>
 
 <?php if ($message): ?>
 <p><?php echo htmlspecialchars($message); ?></p>
@@ -110,8 +121,17 @@ if ($max == 0) $max = 1;
 <div class="top-bar">
 
 <form method="GET">
-    <label>Year</label>
     <input type="number" name="year" min="2000" max="2026" value="<?php echo $year; ?>">
+
+    <select name="month">
+        <option value="0">All Months</option>
+        <?php for ($i=1; $i<=12; $i++): ?>
+            <option value="<?php echo $i; ?>" <?php if($month==$i) echo "selected"; ?>>
+                <?php echo date("F", mktime(0,0,0,$i,1)); ?>
+            </option>
+        <?php endfor; ?>
+    </select>
+
     <button type="submit">Filter</button>
 </form>
 
@@ -125,7 +145,7 @@ if ($max == 0) $max = 1;
 
 <div class="chart">
 <?php foreach ($monthly as $v): ?>
-<div class="bar" style="height:<?php echo ($v/$max)*220; ?>px;"></div>
+<div class="bar" style="height:<?php echo min(220, ($v / $max) * 220); ?>px;"></div>
 <?php endforeach; ?>
 </div>
 
@@ -165,15 +185,13 @@ if ($max == 0) $max = 1;
 
 <div id="popup" class="popup">
     <div class="popup-content">
-        <span class="close" onclick="closePopup()">X</span>
-
+        <span onclick="closePopup()">X</span>
         <form method="POST">
-            <input type="text" name="description" placeholder="Description" required>
-            <input type="number" step="0.01" name="amount" placeholder="Amount" required>
+            <input type="text" name="description" required>
+            <input type="number" step="0.01" name="amount" required>
             <input type="date" name="date" value="<?php echo date('Y-m-d'); ?>">
             <button name="add_expense">Add</button>
         </form>
-
     </div>
 </div>
 
@@ -196,7 +214,11 @@ function closePopup() {
         <div class="index-footer-column">
             <h4>Quick Links</h4>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.php">Dashboard</a></li>
+                <li><a href="account.php">Account</a></li>
+                <li><a href="expenses.php">Expenses</a></li>
+                <li><a href="income.php">Income</a></li>
+                <li><a href="budgets.php">Budgets</a></li>
             </ul>
         </div>
 
@@ -207,6 +229,7 @@ function closePopup() {
         </div>
     </div>
 </footer>
+
 
 </body>
 </html>

@@ -8,30 +8,69 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$name = $_SESSION['first_name'] ?? "User";
+
+$message = "";
 
 if (isset($_POST['add_income'])) {
-    $description = trim($_POST['description']);
-    $amount = floatval($_POST['amount']);
-    $date = $_POST['date'];
 
-    if ($description && $amount > 0) {
+    $description = trim($_POST['description'] ?? '');
+    $amount = floatval($_POST['amount'] ?? 0);
+    $date = $_POST['date'] ?? date('Y-m-d');
+
+    if ($description !== "" && $amount > 0) {
+
         $stmt = $conn->prepare("INSERT INTO income (user_id, description, amount, date) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssds", $user_id, $description, $amount, $date);
+
         $stmt->execute();
         $stmt->close();
+
+        $message = "Income added.";
+    } else {
+        $message = "Invalid input.";
     }
 }
 
-$incomes = [];
-$stmt = $conn->prepare("SELECT description, amount, date FROM income WHERE user_id=? ORDER BY date DESC");
-$stmt->bind_param("s", $user_id);
+if (isset($_POST['delete_income'])) {
+
+    $income_id = intval($_POST['income_id']);
+
+    $stmt = $conn->prepare("DELETE FROM income WHERE income_id=? AND user_id=?");
+    $stmt->bind_param("is", $income_id, $user_id);
+    $stmt->execute();
+    $stmt->close();
+
+    $message = "Income deleted.";
+}
+
+$year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
+if ($year < 2000) $year = 2000;
+if ($year > 2026) $year = 2026;
+
+$stmt = $conn->prepare("SELECT income_id, description, amount, date FROM income WHERE user_id=? AND YEAR(date)=? ORDER BY date DESC");
+$stmt->bind_param("si", $user_id, $year);
 $stmt->execute();
 $result = $stmt->get_result();
 
+$income = [];
 while ($row = $result->fetch_assoc()) {
-    $incomes[] = $row;
+    $income[] = $row;
 }
+
+$total = 0;
+foreach ($income as $e) {
+    $total += $e['amount'];
+}
+
+$monthly = array_fill(1, 12, 0);
+
+foreach ($income as $e) {
+    $m = (int)date('n', strtotime($e['date']));
+    $monthly[$m] += $e['amount'];
+}
+
+$max = max($monthly);
+if ($max == 0) $max = 1;
 ?>
 
 <!DOCTYPE html>
@@ -39,71 +78,114 @@ while ($row = $result->fetch_assoc()) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Income - Buff Budgets</title>
+<title>Expenses</title>
 <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+
 </head>
 
-<body class="income-page">
+<body>
 
 <nav class="navbar">
-    <div class="logo">
-        <a href="dashboard.php"><img src="logo.png" alt="Logo"></a>
+    <div class="dashboard-logo">
+        <a href="dashboard.php"><img src="logo.png"></a>
     </div>
-
-    <ul class="nav-links">
+    <ul class="dashboard-nav-links">
         <li><a href="dashboard.php">Dashboard</a></li>
         <li><a href="account.php">Account</a></li>
         <li><a href="expenses.php">Expenses</a></li>
-        <li><a href="budgets.php">Budgets</a></li>
         <li><a href="income.php">Income</a></li>
-        <li><a href="monthly_summary.php">Monthly Summary</a></li>
+        <li><a href="budgets.php">Budgets</a></li>
         <li><a href="categories.php">Categories</a></li>
-        <li><a href="logout.php">Logout</a></li>
+        <li><a href="monthly_summary.php">Monthly Summary</a></li>
     </ul>
 </nav>
 
-<header class="income-hero-banner">
-    <h1>Income</h1>
-    <p>Manage your income, <?php echo htmlspecialchars($name); ?></p>
-</header>
+<main class="expenses-main">
 
-<main class="income-main">
+<h1 class="page-title">View Your Income</h1>
 
-<h2>Add New Income</h2>
-<form method="POST" class="income-form">
-    <input type="text" name="description" placeholder="Description" required>
-    <input type="number" step="0.01" name="amount" placeholder="Amount (£)" required>
-    <input type="date" name="date" value="<?php echo date('Y-m-d'); ?>" required>
-    <button type="submit" name="add_income">Add Income</button>
+<?php if ($message): ?>
+<p><?php echo htmlspecialchars($message); ?></p>
+<?php endif; ?>
+
+<div class="top-bar">
+
+<form method="GET">
+    <label>Year</label>
+    <input type="number" name="year" min="2000" max="2026" value="<?php echo $year; ?>">
+    <button type="submit">Filter</button>
 </form>
 
-<h2>Recent Income</h2>
-<table class="transactions">
-<thead>
+<div class="total-box">
+£<?php echo number_format($total,2); ?>
+</div>
+
+<button onclick="openPopup()">Add Income</button>
+
+</div>
+
+<div class="chart">
+<?php foreach ($monthly as $v): ?>
+<div class="bar" style="height:<?php echo ($v/$max)*220; ?>px;"></div>
+<?php endforeach; ?>
+</div>
+
+<div class="months">
+<?php foreach(["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"] as $m): ?>
+<span><?php echo $m; ?></span>
+<?php endforeach; ?>
+</div>
+
+<h2>Recent Expenses</h2>
+
+<table>
 <tr>
 <th>Description</th>
 <th>Amount</th>
 <th>Date</th>
+<th>Action</th>
 </tr>
-</thead>
-<tbody>
 
-<?php if (count($incomes) > 0): ?>
-    <?php foreach ($incomes as $i): ?>
-    <tr>
-        <td><?php echo htmlspecialchars($i['description']); ?></td>
-        <td>£<?php echo number_format($i['amount'], 2); ?></td>
-        <td><?php echo $i['date']; ?></td>
-    </tr>
-    <?php endforeach; ?>
-<?php else: ?>
-<tr><td colspan="3">No income added yet.</td></tr>
-<?php endif; ?>
+<?php foreach ($income as $e): ?>
+<tr>
+<td><?php echo htmlspecialchars($e['description']); ?></td>
+<td>£<?php echo number_format($e['amount'],2); ?></td>
+<td><?php echo $e['date']; ?></td>
+<td>
+<form method="POST">
+    <input type="hidden" name="income_id" value="<?php echo $e['income_id']; ?>">
+    <button name="delete_income">Delete</button>
+</form>
+</td>
+</tr>
+<?php endforeach; ?>
 
-</tbody>
 </table>
 
 </main>
+
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">X</span>
+
+        <form method="POST">
+            <input type="text" name="description" placeholder="Description" required>
+            <input type="number" step="0.01" name="amount" placeholder="Amount" required>
+            <input type="date" name="date" value="<?php echo date('Y-m-d'); ?>">
+            <button name="add_income">Add</button>
+        </form>
+
+    </div>
+</div>
+
+<script>
+function openPopup() {
+    document.getElementById("popup").style.display = "flex";
+}
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+</script>
 
 <footer class="index-footer">
     <div class="index-footer-container">
@@ -118,8 +200,8 @@ while ($row = $result->fetch_assoc()) {
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="account.php">Account</a></li>
                 <li><a href="expenses.php">Expenses</a></li>
-                <li><a href="budgets.php">Budgets</a></li>
                 <li><a href="income.php">Income</a></li>
+                <li><a href="budgets.php">Budgets</a></li>
             </ul>
         </div>
 
