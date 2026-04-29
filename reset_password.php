@@ -6,72 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
     <title>Buff Budgets</title>
-
-    <style>
-    .reset-container {
-        max-width: 500px;
-        margin: 140px auto;
-        background: #fff;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        text-align: center;
-    }
-
-    .reset-container input {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 15px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-    }
-
-    .reset-container button {
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        background: #dfa1dc;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .reset-message {
-        padding: 12px;
-        margin-bottom: 15px;
-        border-radius: 8px;
-        font-weight: bold;
-    }
-
-    .reset-message.success {
-        background: #d4edda;
-        color: #155724;
-    }
-
-    .reset-message.error {
-        background: #f8d7da;
-        color: #721c24;
-    }
-    </style>
 </head>
 
 <body class="index-page">
 
-<nav class="index-navbar">
-    <div class="index-logo">
-        <a href="index.html">
-            <img src="logo.png" alt="Buff Budgets Logo">
-        </a>
-    </div>
-
-    <ul class="index-nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="login.php">Login</a></li>
-        <li><a href="register.php">Register</a></li>
-        <li><a href="contact.php">Contact Us</a></li>
-        <li><a href="contact.php">Contact Us</a></li>
-    </ul>
-</nav>
+<?php include 'navbar.php'; ?>
 
 <?php
 include "db.php";

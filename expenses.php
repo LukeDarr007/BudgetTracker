@@ -13,25 +13,36 @@ $message = "";
 if (isset($_POST['add_expense'])) {
 
     $description = trim($_POST['description'] ?? '');
-    $amount = floatval($_POST['amount'] ?? 0);
+    $amount_raw = $_POST['amount'] ?? '';
     $date = $_POST['date'] ?? date('Y-m-d');
 
     if ($description === "") {
         $message = "Description required.";
     }
-    elseif ($amount <= 0) {
-        $message = "Amount must be greater than 0.";
+    elseif ($amount_raw === "") {
+        $message = "Amount is required.";
     }
-    elseif ($amount > 1000000) {
-        $message = "Amount cannot exceed 1,000,000.";
+    elseif (!is_numeric($amount_raw)) {
+        $message = "Amount must be a valid number.";
     }
     else {
-        $stmt = $conn->prepare("INSERT INTO expense (user_id, description, amount, date) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssds", $user_id, $description, $amount, $date);
-        $stmt->execute();
-        $stmt->close();
-        header("Location: expenses.php?year=" . date('Y'));
-        exit();
+        $amount = floatval($amount_raw);
+
+        if ($amount <= 0) {
+            $message = "Amount must be greater than 0.";
+        }
+        elseif ($amount > 1000000) {
+            $message = "Amount cannot exceed 1,000,000.";
+        }
+        else {
+            $stmt = $conn->prepare("INSERT INTO expense (user_id, description, amount, date) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssds", $user_id, $description, $amount, $date);
+            $stmt->execute();
+            $stmt->close();
+
+            header("Location: expenses.php?year=" . date('Y'));
+            exit();
+        }
     }
 }
 
@@ -75,7 +86,6 @@ foreach ($expenses as $e) {
 }
 
 $monthly = array_fill(1, 12, 0);
-
 foreach ($expenses as $e) {
     $m = (int)date('n', strtotime($e['date']));
     $monthly[$m] += $e['amount'];
@@ -95,27 +105,14 @@ $max = 100000;
 
 <body class="expenses-page">
 
-<nav class="navbar">
-    <div class="dashboard-logo">
-        <a href="dashboard.php"><img src="logo.png"></a>
-    </div>
-    <ul class="dashboard-nav-links">
-        <li><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="account.php">Account</a></li>
-        <li><a href="expenses.php">Expenses</a></li>
-        <li><a href="income.php">Income</a></li>
-        <li><a href="budgets.php">Budgets</a></li>
-        <li><a href="categories.php">Categories</a></li>
-        <li><a href="monthly_summary.php">Monthly Summary</a></li>
-    </ul>
-</nav>
+<?php include 'navbar.php'; ?>
 
 <main class="expenses-main">
 
 <h1 class="page-title">Add Your Expenses</h1>
 
 <?php if ($message): ?>
-<p><?php echo htmlspecialchars($message); ?></p>
+<p style="color:red;"><?php echo htmlspecialchars($message); ?></p>
 <?php endif; ?>
 
 <div class="top-bar">
@@ -187,8 +184,8 @@ $max = 100000;
     <div class="popup-content">
         <span onclick="closePopup()">X</span>
         <form method="POST">
-            <input type="text" name="description" required>
-            <input type="number" step="0.01" name="amount" required>
+            <input type="text" name="description" placeholder="Description" required>
+            <input type="number" step="0.01" name="amount" min="0.01" max="1000000" required>
             <input type="date" name="date" value="<?php echo date('Y-m-d'); ?>">
             <button name="add_expense">Add</button>
         </form>
@@ -229,7 +226,6 @@ function closePopup() {
         </div>
     </div>
 </footer>
-
 
 </body>
 </html>

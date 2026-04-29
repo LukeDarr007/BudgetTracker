@@ -58,20 +58,7 @@ if ($next_month > 12) {
 
 <body class="monthly-summary-page">
 
-<nav class="navbar">
-    <div class="dashboard-logo">
-        <a href="dashboard.php"><img src="logo.png"></a>
-    </div>
-    <ul class="dashboard-nav-links">
-        <li><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="account.php">Account</a></li>
-        <li><a href="expenses.php">Expenses</a></li>
-        <li><a href="income.php">Income</a></li>
-        <li><a href="budgets.php">Budgets</a></li>
-        <li><a href="categories.php">Categories</a></li>
-        <li><a href="monthly_summary.php">Monthly Summary</a></li>
-    </ul>
-</nav>
+<?php include 'navbar.php'; ?>
 
 <header class="monthly-summary-hero-banner hero-banner">
     <div class="monthly-summary-hero-text hero-text">

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+    <title>Buff Budgets</title>
+</head>
+
+<body class="index-page">
+
+    
+    
+    <?php include 'navbar.php'; ?>
+
+    <header class="index-hero-banner hero-banner">
+        <div class="index-hero-tet hero-text">
+            <h1>Welcome to Buff Budgets</h1>
+            <p class="index-subtitle subtitle">
+                A single platform for managing all your financial needs, the strongest budget tracker available.
+            </p>
+        </div>
+    </header>
+
+
+    <section class="hero-content">
+        <div class="carousel-text">
+            <h1 id="carousel-title">Why You Should Use Buff Budgets</h1>
+            <p id="carousel-desc">Stay in control of your expenses with automatic real-time tracking.</p>
+        </div>
+        <div class="carousel">
+            <img id="carousel-image" src="Stock1.png" alt="Budget preview" class="carousel-image">
+        </div>
+    </section>
+
+    <section class="features">
+
+    <div class="feature">
+        <div class="feature-text">
+            <h3>Simple, Easy Budgeting At The Press Of A Finger</h3>
+            <p>Buff Budgets is designed with the user in mind, it doesn't matter how technically competent you are, anyone who accesses our website, their needs are taken into account.</p>
+        </div>
+        <div class="feature-image">
+            <img src="feature1.png" alt="Simple Budgeting">
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="feature-text">
+            <h3>Secure and Personal</h3>
+            <p>Here at Buff Budgets, we recognise your financial information is important. That's why Buff Budgets provides secure user accounts so your data will stay private and protected.</p>
+        </div>
+        <div class="feature-image">
+            <img src="feature2.png" alt="Secure and Personal">
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="feature-text">
+            <h3>Visualise Your Money</h3>
+            <p>With us you can understand where your money goes with charts and analytics, giving you a clear 
+            picture of your spending habits while also helping you make informed financial decisions.</p>
+        </div>
+        <div class="feature-image">
+            <img src="feature3.png" alt="Visualise Your Money">
+        </div>
+    </div>
+
+    <div class="feature">
+
+    <div class="feature-text">
+        <h3>
+            <a href="register.php" class="feature-title-link">
+                So Register Today To Stay Strong with Buff Budgets
+            </a>
+        </h3>
+
+        <p>Join Buff Budgets today to strengthen your financial decisions with clarity and control.</p>
+    </div>
+
+    <a href="register.php" class="feature-image-link">
+        <div class="feature-image">
+            <img src="feature4.png" alt="Register Today">
+        </div>
+    </a>
+
+</div>
+
+</section>
+
+    
+
+
+    <footer class="index-footer">
+        <div class="index-footer-container">
+            <div class="index-footer-column">
+                <img src="logo.png" alt="Buff Budgets Logo" class="footer-logo">
+                <p>© 2026 Buff Budgets. All rights reserved.</p>
+            </div>
+            <div class="index-footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="account.html">Account</a></li>
+                    <li><a href="expenses.html">Expenses</a></li>
+                    <li><a href="budgets.html">Budgets</a></li>
+                </ul>
+            </div>
+            <div class="index-footer-column">
+                <h4>Contact Us</h4>
+                <p>Tel: (01321) 2340 235</p>
+                <p>Email: buffbudgetadmin@gmail.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

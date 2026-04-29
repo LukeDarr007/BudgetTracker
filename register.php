@@ -108,39 +108,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
 <title>Register</title>
-
-<style>
-.register-message {
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-}
-.register-message.success {
-    background: #d4edda;
-    color: #155724;
-}
-.register-message.error {
-    background: #f8d7da;
-    color: #721c24;
-}
-</style>
 </head>
 
 <body class="register-page">
 
-<nav class="register-navbar">
-    <div class="index-logo">
-        <a href="index.html"><img src="logo.png"></a>
-    </div>
-    <ul class="index-nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="login.php">Login</a></li>
-        <li><a href="register.php">Register</a></li>
-        <li><a href="contact.php">Contact Us</a></li>
-    </ul>
-</nav>
+<?php include 'navbar.php'; ?>
 
 <div class="register-container">
     <div class="register-card">
@@ -172,26 +144,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </div>
 
 <footer class="index-footer">
-    <div class="index-footer-container">
-        <div class="index-footer-column">
-            <img src="logo.png" class="footer-logo">
-            <p>© 2026 Buff Budgets. All rights reserved.</p>
+        <div class="index-footer-container">
+            <div class="index-footer-column">
+                <img src="logo.png" alt="Buff Budgets Logo" class="footer-logo">
+                <p>© 2026 Buff Budgets. All rights reserved.</p>
+            </div>
+            <div class="index-footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="login.php">Login</a></li>
+                    <li><a href="register.php">Register</a></li>
+                    <li><a href="contact.php">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="index-footer-column">
+                <h4>Contact Us</h4>
+                <p>Tel: (01321) 2340 235</p>
+                <p>Email: buffbudgetadmin@gmail.com</p>
+            </div>
         </div>
-
-        <div class="index-footer-column">
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-            </ul>
-        </div>
-
-        <div class="index-footer-column">
-            <h4>Contact Us</h4>
-            <p>Tel: (01321) 2340 235</p>
-            <p>Email: info@buffbudgets.com</p>
-        </div>
-    </div>
-</footer>
+    </footer>
 
 
 

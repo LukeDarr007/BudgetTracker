@@ -59,49 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
 <title>Forgot Password</title>
 
-<style>
-.register-message {
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-}
-.register-message.success {
-    background: #d4edda;
-    color: #155724;
-}
-.register-message.error {
-    background: #f8d7da;
-    color: #721c24;
-}
-.reset-link {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 20px;
-    background: #dfa1dc;
-    color: #000;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-}
-</style>
-
 </head>
 
-<body class="register-page">
+<?php include 'navbar.php'; ?>
 
-<nav class="register-navbar">
-    <div class="index-logo">
-        <a href="index.html"><img src="logo.png"></a>
-    </div>
-    <ul class="index-nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="login.php">Login</a></li>
-        <li><a href="register.php">Register</a></li>
-        <li><a href="contact.php">Contact Us</a></li>
-    </ul>
-</nav>
 
 <div class="register-container">
     <div class="register-card">

@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['logout'])) {
         session_unset();
         session_destroy();
-        header("Location: index.html");
+        header("Location: index.php");
         exit();
     }
 
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         session_unset();
         session_destroy();
-        header("Location: index.html");
+        header("Location: index.php");
         exit();
     }
 
@@ -73,21 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body class="account-page">
 
-<nav class="navbar">
-    <div class="dashboard-logo">
-        <a href="dashboard.php"><img src="logo.png"></a>
-    </div>
-
-    <ul class="dashboard-nav-links">
-        <li><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="account.php">Account</a></li>
-        <li><a href="expenses.php">Expenses</a></li>
-        <li><a href="income.php">Income</a></li>
-        <li><a href="budgets.php">Budgets</a></li>
-        <li><a href="categories.php">Categories</a></li>
-        <li><a href="monthly_summary.php">Monthly Summary</a></li>
-    </ul>
-</nav>
+<?php include 'navbar.php'; ?>
 
 
 <div class="account-wrapper">
