@@ -10,46 +10,34 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $message = "";
 
-if (isset($_POST['add_income'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_income'])) {
 
     $description = trim($_POST['description'] ?? '');
-    $amount_raw = $_POST['amount'] ?? '';
+    $amount = $_POST['amount'] ?? '';
     $date = $_POST['date'] ?? date('Y-m-d');
 
-    if ($description === "") {
-        $message = "Description required.";
+    if ($description === '' || $amount === '') {
+        $message = "All fields are required.";
     }
-    elseif ($amount_raw === "") {
-        $message = "Amount is required.";
-    }
-    elseif (!is_numeric($amount_raw)) {
-        $message = "Amount must be a valid number.";
+    elseif (!is_numeric($amount) || $amount <= 0 || $amount > 1000000) {
+        $message = "Invalid amount.";
     }
     else {
-        $amount = floatval($amount_raw);
+        $stmt = $conn->prepare("INSERT INTO income (user_id, description, amount, date) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssds", $user_id, $description, $amount, $date);
+        $stmt->execute();
+        $stmt->close();
 
-        if ($amount <= 0) {
-            $message = "Amount must be greater than 0.";
-        }
-        elseif ($amount > 1000000) {
-            $message = "Amount cannot exceed 1,000,000.";
-        }
-        else {
-            $stmt = $conn->prepare("INSERT INTO income (user_id, description, amount, date) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ssds", $user_id, $description, $amount, $date);
-            $stmt->execute();
-            $stmt->close();
-
-            header("Location: income.php?year=" . date('Y'));
-            exit();
-        }
+        header("Location: income.php?year=" . date('Y'));
+        exit();
     }
 }
 
-if (isset($_POST['delete_income'])) {
-    $income_id = intval($_POST['income_id']);
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_income'])) {
 
-    $stmt = $conn->prepare("DELETE FROM income WHERE income_id=? AND user_id=?");
+    $income_id = $_POST['income_id'] ?? 0;
+
+    $stmt = $conn->prepare("DELETE FROM income WHERE income_id = ? AND user_id = ?");
     $stmt->bind_param("is", $income_id, $user_id);
     $stmt->execute();
     $stmt->close();
@@ -58,17 +46,17 @@ if (isset($_POST['delete_income'])) {
     exit();
 }
 
-$year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
-$month = isset($_GET['month']) ? intval($_GET['month']) : 0;
+$year = isset($_GET['year']) ? (int)$_GET['year'] : date('Y');
+$month = isset($_GET['month']) ? (int)$_GET['month'] : 0;
 
 if ($year < 2000) $year = 2000;
-if ($year > 2026) $year = 2026;
+if ($year > 2100) $year = 2100;
 
 if ($month > 0) {
-    $stmt = $conn->prepare("SELECT income_id, description, amount, date FROM income WHERE user_id=? AND YEAR(date)=? AND MONTH(date)=? ORDER BY date DESC");
+    $stmt = $conn->prepare("SELECT income_id, description, amount, date FROM income WHERE user_id = ? AND YEAR(date) = ? AND MONTH(date) = ? ORDER BY date DESC");
     $stmt->bind_param("sii", $user_id, $year, $month);
 } else {
-    $stmt = $conn->prepare("SELECT income_id, description, amount, date FROM income WHERE user_id=? AND YEAR(date)=? ORDER BY date DESC");
+    $stmt = $conn->prepare("SELECT income_id, description, amount, date FROM income WHERE user_id = ? AND YEAR(date) = ? ORDER BY date DESC");
     $stmt->bind_param("si", $user_id, $year);
 }
 
@@ -76,23 +64,22 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 $income = [];
+$total = 0;
+
 while ($row = $result->fetch_assoc()) {
     $income[] = $row;
-}
-
-$total = 0;
-foreach ($income as $i) {
-    $total += $i['amount'];
+    $total += $row['amount'];
 }
 
 $monthly = array_fill(1, 12, 0);
+
 foreach ($income as $i) {
     $m = (int)date('n', strtotime($i['date']));
     $monthly[$m] += $i['amount'];
 }
 
 $max = max($monthly);
-if ($max == 0) $max = 1;
+if ($max <= 0) $max = 1;
 ?>
 
 <!DOCTYPE html>
@@ -119,24 +106,20 @@ if ($max == 0) $max = 1;
 <div class="top-bar">
 
 <form method="GET">
-
-    <input type="number" name="year" min="2000" max="2026" value="<?php echo $year; ?>">
-
-    <select name="month">
-        <option value="0">All Months</option>
-        <?php for ($i=1; $i<=12; $i++): ?>
-            <option value="<?php echo $i; ?>" <?php if($month==$i) echo "selected"; ?>>
-                <?php echo date("F", mktime(0,0,0,$i,1)); ?>
-            </option>
-        <?php endfor; ?>
-    </select>
-
-    <button type="submit">Filter</button>
-
+<input type="number" name="year" value="<?php echo $year; ?>">
+<select name="month">
+<option value="0">All Months</option>
+<?php for ($i = 1; $i <= 12; $i++): ?>
+<option value="<?php echo $i; ?>" <?php if ($month == $i) echo "selected"; ?>>
+<?php echo date("F", mktime(0,0,0,$i,1)); ?>
+</option>
+<?php endfor; ?>
+</select>
+<button type="submit">Filter</button>
 </form>
 
 <div class="total-box">
-£<?php echo number_format($total,2); ?>
+£<?php echo number_format($total, 2); ?>
 </div>
 
 <button onclick="openPopup()">Add Income</button>
@@ -145,12 +128,12 @@ if ($max == 0) $max = 1;
 
 <div class="chart">
 <?php foreach ($monthly as $v): ?>
-<div class="bar" style="height:<?php echo ($v/$max)*220; ?>px;"></div>
+<div class="bar" style="height:<?php echo ($v / $max) * 220; ?>px;"></div>
 <?php endforeach; ?>
 </div>
 
 <div class="months">
-<?php foreach(["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"] as $m): ?>
+<?php foreach (["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"] as $m): ?>
 <span><?php echo $m; ?></span>
 <?php endforeach; ?>
 </div>
@@ -168,7 +151,7 @@ if ($max == 0) $max = 1;
 <?php foreach ($income as $i): ?>
 <tr>
 <td><?php echo htmlspecialchars($i['description']); ?></td>
-<td>£<?php echo number_format($i['amount'],2); ?></td>
+<td>£<?php echo number_format($i['amount'], 2); ?></td>
 <td><?php echo $i['date']; ?></td>
 <td>
 <form method="POST">
@@ -188,8 +171,8 @@ if ($max == 0) $max = 1;
 <span onclick="closePopup()">X</span>
 
 <form method="POST">
-<input type="text" name="description" placeholder="Description" required>
-<input type="number" step="0.01" name="amount" min="0.01" max="1000000" required>
+<input type="text" name="description" required>
+<input type="number" step="0.01" name="amount" required>
 <input type="date" name="date" value="<?php echo date('Y-m-d'); ?>">
 <button name="add_income">Add</button>
 </form>
@@ -199,38 +182,12 @@ if ($max == 0) $max = 1;
 
 <script>
 function openPopup() {
-    document.getElementById("popup").style.display = "flex";
+document.getElementById("popup").style.display = "flex";
 }
 function closePopup() {
-    document.getElementById("popup").style.display = "none";
+document.getElementById("popup").style.display = "none";
 }
 </script>
-
-<footer class="index-footer">
-    <div class="index-footer-container">
-        <div class="index-footer-column">
-            <img src="logo.png" class="footer-logo">
-            <p>© 2026 Buff Budgets. All rights reserved.</p>
-        </div>
-
-        <div class="index-footer-column">
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="account.php">Account</a></li>
-                <li><a href="expenses.php">Expenses</a></li>
-                <li><a href="income.php">Income</a></li>
-                <li><a href="budgets.php">Budgets</a></li>
-            </ul>
-        </div>
-
-        <div class="index-footer-column">
-            <h4>Contact Us</h4>
-            <p>Tel: (01321) 2340 235</p>
-            <p>Email: info@buffbudgets.com</p>
-        </div>
-    </div>
-</footer>
 
 </body>
 </html>
