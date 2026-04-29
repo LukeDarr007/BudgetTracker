@@ -1178,7 +1178,7 @@ button:hover {
 }
 
 .categories-table th {
-    background: #f1f5f9
+    background: #f1f5f9;
     color: #1B5E20;
 }
 
@@ -1213,7 +1213,7 @@ button:hover {
 }
 
 .monthly-summary-hero-banner {
-    background: linear-gradient(135deg, #1B5E20;, #009e7a);
+    background: linear-gradient(135deg, #1B5E20, #009e7a);
     color: white;
     padding: 50px 20px;
     text-align: center;
