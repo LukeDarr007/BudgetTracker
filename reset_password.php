@@ -1,3 +1,55 @@
+<?php
+include "db.php";
+
+$token = $_GET['token'] ?? '';
+$message = "";
+$messageType = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $token = $_POST['token'] ?? '';
+    $new_password = $_POST['password'] ?? '';
+
+    if (!preg_match("/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/", $new_password)) {
+
+        $message = "Password must be 8+ characters, include a capital letter, number and special character.";
+        $messageType = "error";
+
+    } else {
+
+        $stmt = $conn->prepare("
+            SELECT user_id 
+            FROM User 
+            WHERE reset_token = ? 
+            AND reset_expiry > NOW()
+        ");
+        $stmt->bind_param("s", $token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows === 1) {
+
+            $hashed = password_hash($new_password, PASSWORD_DEFAULT);
+
+            $stmt = $conn->prepare("
+                UPDATE User 
+                SET password = ?, reset_token = NULL, reset_expiry = NULL 
+                WHERE reset_token = ?
+            ");
+            $stmt->bind_param("ss", $hashed, $token);
+            $stmt->execute();
+
+            $message = "Password updated successfully.";
+            $messageType = "success";
+
+        } else {
+            $message = "Invalid or expired reset link.";
+            $messageType = "error";
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,47 +63,6 @@
 <body class="index-page">
 
 <?php include 'navbar.php'; ?>
-
-<?php
-include "db.php";
-
-$token = $_GET['token'] ?? '';
-$message = "";
-$messageType = "";
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-    $token = $_POST['token'];
-    $new_password = $_POST['password'];
-
-    if (!preg_match("/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/", $new_password)) {
-        $message = "Password must be 8+ characters, include a capital letter, number and special character.";
-        $messageType = "error";
-    } else {
-
-        $stmt = $conn->prepare("SELECT user_id FROM User WHERE reset_token=? AND reset_expiry > NOW()");
-        $stmt->bind_param("s", $token);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows === 1) {
-
-            $hashed = password_hash($new_password, PASSWORD_DEFAULT);
-
-            $stmt = $conn->prepare("UPDATE User SET password=?, reset_token=NULL, reset_expiry=NULL WHERE reset_token=?");
-            $stmt->bind_param("ss", $hashed, $token);
-            $stmt->execute();
-
-            $message = "Password updated successfully.";
-            $messageType = "success";
-
-        } else {
-            $message = "Invalid or expired token.";
-            $messageType = "error";
-        }
-    }
-}
-?>
 
 <div class="reset-container">
 
@@ -70,28 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </form>
 
 </div>
-
-<footer class="index-footer">
-    <div class="index-footer-container">
-        <div class="index-footer-column">
-            <img src="logo.png" class="footer-logo">
-            <p>© 2026 Buff Budgets. All rights reserved.</p>
-        </div>
-
-        <div class="index-footer-column">
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-            </ul>
-        </div>
-
-        <div class="index-footer-column">
-            <h4>Contact Us</h4>
-            <p>Tel: (01321) 2340 235</p>
-            <p>Email: info@buffbudgets.com</p>
-        </div>
-    </div>
-</footer>
 
 </body>
 </html>

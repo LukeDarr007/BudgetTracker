@@ -8,6 +8,17 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+
+$stmt = $conn->prepare("SELECT user_id FROM user WHERE user_id = ?");
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$res = $stmt->get_result();
+
+if ($res->num_rows === 0) {
+    session_destroy();
+    die("Invalid session - user does not exist in database.");
+}
+
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_income'])) {
@@ -26,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_income'])) {
         $stmt = $conn->prepare("INSERT INTO income (user_id, description, amount, date) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssds", $user_id, $description, $amount, $date);
         $stmt->execute();
-        $stmt->close();
 
         header("Location: income.php?year=" . date('Y'));
         exit();
@@ -40,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_income'])) {
     $stmt = $conn->prepare("DELETE FROM income WHERE income_id = ? AND user_id = ?");
     $stmt->bind_param("is", $income_id, $user_id);
     $stmt->execute();
-    $stmt->close();
 
     header("Location: income.php");
     exit();
@@ -48,9 +57,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['delete_income'])) {
 
 $year = isset($_GET['year']) ? (int)$_GET['year'] : date('Y');
 $month = isset($_GET['month']) ? (int)$_GET['month'] : 0;
-
-if ($year < 2000) $year = 2000;
-if ($year > 2100) $year = 2100;
 
 if ($month > 0) {
     $stmt = $conn->prepare("SELECT income_id, description, amount, date FROM income WHERE user_id = ? AND YEAR(date) = ? AND MONTH(date) = ? ORDER BY date DESC");

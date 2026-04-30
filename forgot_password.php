@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $token = bin2hex(random_bytes(50));
                 $expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
 
-                $stmt = $conn->prepare("UPDATE User SET reset_token=?, reset_expiry=? WHERE email=?");
+                $stmt = $conn->prepare("UPDATE User SET reset_token=?, reset_expires=? WHERE email=?");
                 $stmt->bind_param("sss", $token, $expiry, $email);
                 $stmt->execute();
 
@@ -98,24 +98,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <footer class="index-footer">
     <div class="index-footer-container">
         <div class="index-footer-column">
-            <img src="logo.png" class="footer-logo">
-            <p>© 2026 Buff Budgets. All rights reserved.</p>
-        </div>
-
-        <div class="index-footer-column">
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-            </ul>
-        </div>
-
-        <div class="index-footer-column">
-            <h4>Contact Us</h4>
-            <p>Tel: (01321) 2340 235</p>
-            <p>Email: info@buffbudgets.com</p>
-        </div>
-    </div>
-</footer>
-
-</body>
-</html>

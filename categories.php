@@ -8,22 +8,33 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+
+$stmt = $conn->prepare("SELECT user_id FROM user WHERE user_id = ?");
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$res = $stmt->get_result();
+
+if ($res->num_rows === 0) {
+    session_destroy();
+    header("Location: login.php");
+    exit();
+}
+
 $message = "";
 
-if (isset($_POST['add_category'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_category'])) {
 
-    $name = trim($_POST['name']);
-    $type = $_POST['type'];
-    $description = trim($_POST['description']);
-    $limit = floatval($_POST['spending_limit']);
+    $name = trim($_POST['name'] ?? '');
+    $type = $_POST['type'] ?? '';
+    $description = trim($_POST['description'] ?? '');
+    $limit = (float)($_POST['spending_limit'] ?? 0);
 
-    if ($name === "") {
+    if ($name === '') {
         $message = "Name required";
     } else {
         $stmt = $conn->prepare("INSERT INTO category (user_id, name, type, description, spending_limit) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("isssd", $user_id, $name, $type, $description, $limit);
+        $stmt->bind_param("ssssd", $user_id, $name, $type, $description, $limit);
         $stmt->execute();
-        $stmt->close();
 
         header("Location: categories.php");
         exit();
@@ -32,36 +43,34 @@ if (isset($_POST['add_category'])) {
 
 if (isset($_GET['delete'])) {
 
-    $category_id = intval($_GET['delete']);
+    $category_id = (int)$_GET['delete'];
 
     $stmt = $conn->prepare("DELETE FROM category WHERE category_id = ? AND user_id = ?");
-    $stmt->bind_param("ii", $category_id, $user_id);
+    $stmt->bind_param("is", $category_id, $user_id);
     $stmt->execute();
-    $stmt->close();
 
     header("Location: categories.php");
     exit();
 }
 
-if (isset($_POST['edit_category'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['edit_category'])) {
 
-    $category_id = intval($_POST['category_id']);
+    $category_id = (int)$_POST['category_id'];
     $name = trim($_POST['name']);
     $type = $_POST['type'];
     $description = trim($_POST['description']);
-    $limit = floatval($_POST['spending_limit']);
+    $limit = (float)$_POST['spending_limit'];
 
     $stmt = $conn->prepare("UPDATE category SET name=?, type=?, description=?, spending_limit=? WHERE category_id=? AND user_id=?");
     $stmt->bind_param("sssdis", $name, $type, $description, $limit, $category_id, $user_id);
     $stmt->execute();
-    $stmt->close();
 
     header("Location: categories.php");
     exit();
 }
 
-$stmt = $conn->prepare("SELECT * FROM category WHERE user_id=? ORDER BY category_id DESC");
-$stmt->bind_param("i", $user_id);
+$stmt = $conn->prepare("SELECT category_id, name, type, description, spending_limit FROM category WHERE user_id=? ORDER BY category_id DESC");
+$stmt->bind_param("s", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -70,19 +79,17 @@ while ($row = $result->fetch_assoc()) {
     $categories[] = $row;
 }
 
-$stmt->close();
-
 $editItem = null;
 
 if (isset($_GET['edit'])) {
 
-    $category_id = intval($_GET['edit']);
+    $category_id = (int)$_GET['edit'];
 
     $stmt = $conn->prepare("SELECT * FROM category WHERE category_id=? AND user_id=?");
-    $stmt->bind_param("ii", $category_id, $user_id);
+    $stmt->bind_param("is", $category_id, $user_id);
     $stmt->execute();
+
     $editItem = $stmt->get_result()->fetch_assoc();
-    $stmt->close();
 }
 ?>
 
